@@ -1,3 +1,9 @@
+# Copyright (C) 2024 by THE-VIP-BOY-OP@Github, <https://github.com/THE-VIP-BOY-OP>.
+# This file is part of <https://github.com/THE-VIP-BOY-OP/VIP-MUSIC> project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see <https://github.com/THE-VIP-BOY-OP/VIP-MUSIC/blob/master/LICENSE>
+# All rights reserved.
+
 import asyncio
 import threading
 
@@ -33,8 +39,8 @@ def run():
     app.run(host="0.0.0.0", port=8000, debug=False)
 
 
-# VIPBot Class
-class VIPBot(Client):
+# Zelzaly Class
+class Zelzaly(Client):
     def __init__(self):
         LOGGER(__name__).info("Starting Bot")
         super().__init__(
@@ -63,19 +69,19 @@ class VIPBot(Client):
             ]
         )
 
-        if config.LOG_GROUP_ID:
+        if config.LOGGER_ID:
             try:
                 await self.send_photo(
-                    config.LOG_GROUP_ID,
+                    config.LOGGER_ID,
                     photo=config.START_IMG_URL,
                     caption=f"╔════❰𝐖𝐄𝐋𝐂𝐎𝐌𝐄❱════❍⊱❁۪۪\n║\n║┣⪼🥀𝐁𝐨𝐭 𝐒𝐭𝐚𝐫𝐭𝐞𝐝 𝐁𝐚𝐛𝐲🎉\n║\n║┣⪼ {self.name}\n║\n║┣⪼🎈𝐈𝐃:- `{self.id}` \n║\n║┣⪼🎄@{self.username} \n║ \n║┣⪼💖𝐓𝐡𝐚𝐧𝐤𝐬 𝐅𝐨𝐫 𝐔𝐬𝐢𝐧𝐠😍\n║\n╚════════════════❍⊱❁",
                     reply_markup=button,
                 )
-            except pyrogram.errors.ChatWriteForbidden as e:
+            except Exception as e:
                 LOGGER(__name__).error(f"Bot cannot write to the log group: {e}")
                 try:
                     await self.send_message(
-                        config.LOG_GROUP_ID,
+                        config.LOGGER_ID,
                         f"╔═══❰𝐖𝐄𝐋𝐂𝐎𝐌𝐄❱═══❍⊱❁۪۪\n║\n║┣⪼🥀𝐁𝐨𝐭 𝐒𝐭𝐚𝐫𝐭𝐞𝐝 𝐁𝐚𝐛𝐲🎉\n║\n║◈ {self.name}\n║\n║┣⪼🎈𝐈𝐃:- `{self.id}` \n║\n║┣⪼🎄@{self.username} \n║ \n║┣⪼💖𝐓𝐡𝐚𝐧𝐤𝐬 𝐅𝐨𝐫 𝐔𝐬𝐢𝐧𝐠😍\n║\n╚══════════════❍⊱❁",
                         reply_markup=button,
                     )
@@ -87,7 +93,7 @@ class VIPBot(Client):
                 )
         else:
             LOGGER(__name__).warning(
-                "LOG_GROUP_ID is not set, skipping log group notifications."
+                "LOGGER_ID is not set, skipping log group notifications."
             )
         if config.SET_CMDS:
             try:
@@ -145,10 +151,10 @@ class VIPBot(Client):
             except Exception as e:
                 LOGGER(__name__).error(f"Failed to set bot commands: {e}")
 
-        if config.LOG_GROUP_ID:
+        if config.LOGGER_ID:
             try:
                 chat_member_info = await self.get_chat_member(
-                    config.LOG_GROUP_ID, self.id
+                    config.LOGGER_ID, self.id
                 )
                 if chat_member_info.status != ChatMemberStatus.ADMINISTRATOR:
                     LOGGER(__name__).error(
@@ -162,7 +168,7 @@ class VIPBot(Client):
 
 # Define the async boot function
 async def anony_boot():
-    bot = VIPBot()
+    bot = Zelzaly()
     await bot.start()
     await idle()
 
@@ -175,9 +181,9 @@ if __name__ == "__main__":
     t.daemon = True
     t.start()
 
-    LOGGER(__name__).info("Starting VIPBot...")
+    LOGGER(__name__).info("Starting Zelzaly...")
 
     # Run the bot
     asyncio.run(anony_boot())
 
-    LOGGER(__name__).info("Stopping VIPBot...")
+    LOGGER(__name__).info("Stopping Zelzaly...")
